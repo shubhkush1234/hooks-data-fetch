@@ -4,23 +4,29 @@ import axios from 'axios';
 function App() {
 
   const [results, setResults] = useState([]);
-  const abc = [];
 
   useEffect(() => {
-    axios.get("http://hn.algolia.com/api/v1/search?query=reacthooks")
+    getResults();
+    },[]);
+
+
+  const getResults = async () => {
+     const response = await axios.get("http://hn.algolia.com/api/v1/search?query=reacthooks")
       .then(response => {
         console.log(response.data);
         setResults(response.data.hits);
-      });
-  });
-
+  })
+}
 
 
   return (
     <div className="App">
-      
-      App
-
+      <input type="text"></input>
+      {results.map(result => (
+        <li>
+         <a href={result.url}>{result.title}</a>
+        </li>
+      ))}
     </div>
   );
 }
