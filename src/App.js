@@ -4,11 +4,11 @@ import axios from 'axios';
 function App() {
 
   const [results, setResults] = useState([]);
-  const [query, setQuery] = useState("reacthooks")
+  const [query, setQuery] = useState("react hooks")
 
   useEffect(() => {
     getResults();
-    },[query]);
+    },[]);
 
 
   const getResults = async () => {
@@ -19,10 +19,20 @@ function App() {
   })
 }
 
+const handleSubmit = (event) => {
+  alert("submitted")
+  event.preventDefault();
+  getResults();
+}
+
 
   return (
-    <div className="App">
-      <input type="text" onChange={(event) => setQuery(event.target.value)}></input>
+    <div className="App" >
+      <form onSubmit={e => handleSubmit(e)}>
+        <input type="text" onChange={(event) => setQuery(event.target.value)} value={query}></input>
+        <button type="submit">search</button>
+      </form>
+      
       {results.map(result => (
         <li>
          <a href={result.url}>{result.title}</a>
